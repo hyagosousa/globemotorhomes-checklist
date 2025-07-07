@@ -6,7 +6,7 @@
   <style>
     body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
     h1 { text-align: center; color: #2c3e50; }
-    #cliente { margin: 0 auto 15px; display: block; width: 100%; max-width: 500px; padding: 10px; }
+    .campo-texto { margin: 0 auto 15px; display: block; width: 100%; max-width: 500px; padding: 10px; }
     ul { list-style: none; padding: 0; max-width: 500px; margin: auto; }
     li { background: #fff; margin: 8px 0; padding: 12px; border-radius: 6px; display: flex; align-items: center; }
     input[type="checkbox"] { margin-right: 15px; }
@@ -19,7 +19,8 @@
 <body>
   <h1>Checklist Instalação Elétrica</h1>
 
-  <input type="text" id="cliente" placeholder="Nome do cliente" />
+  <input type="text" id="cliente" class="campo-texto" placeholder="Nome do cliente" />
+  <input type="text" id="responsavel" class="campo-texto" placeholder="Nome de quem preencheu o checklist" />
 
   <ul id="checklist">
     <li><input type="checkbox" onchange="check(this)">Instalar disjuntores no quadro principal</li>
@@ -35,14 +36,14 @@
   </ul>
 
   <button onclick="resetChecklist()">Limpar Checklist</button>
-  <button onclick="window.print()">Imprimir / Salvar como PDF</button>
-  <button onclick="copiarResumo()">Copiar resumo</button>
-  <button onclick="compartilharWhatsApp()">📲 Compartilhar via WhatsApp</button>
+  <button onclick="baixarPDF()">📥 Baixar PDF do Checklist</button>
 
   <div id="rodape">
-    Checklist preenchido por: <strong>Hyago Sousa</strong><br>
     Empresa: <strong>GLOBE MOTORHOMES</strong>
   </div>
+
+  <!-- Biblioteca PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <script>
     function check(cb) {
@@ -58,15 +59,18 @@
         cb.checked = false;
         cb.parentElement.classList.remove('checked');
       });
+      document.getElementById('cliente').value = '';
+      document.getElementById('responsavel').value = '';
     }
 
-    function gerarResumo() {
+    function gerarResumoTexto() {
       const cliente = document.getElementById('cliente').value || '[Sem nome]';
+      const responsavel = document.getElementById('responsavel').value || '[Não informado]';
       const agora = new Date();
       const dataHora = agora.toLocaleString('pt-BR', { hour12: false });
       const itens = document.querySelectorAll('#checklist li');
 
-      let texto = 📋 *Checklist - Instalação Elétrica*\n👤 Cliente: ${cliente}\n🕒 Data/Hora: ${dataHora}\n\n✅ Itens:\n;
+      let texto = Checklist - Instalação Elétrica\nCliente: ${cliente}\nData/Hora: ${dataHora}\n\nItens:\n;
 
       itens.forEach(li => {
         const checkbox = li.querySelector('input[type="checkbox"]');
@@ -74,24 +78,22 @@
         texto += - ${li.textContent.trim()}: ${status}\n;
       });
 
-      texto += \n🔧 Realizado por: Hyago Sousa\n🏢 Empresa: GLOBE MOTORHOMES;
-
+      texto += \nResponsável pelo checklist: ${responsavel}\nEmpresa: GLOBE MOTORHOMES;
       return texto;
     }
 
-    function copiarResumo() {
-      const resumo = gerarResumo();
-      navigator.clipboard.writeText(resumo).then(() => {
-        alert('Resumo copiado! Cole no WhatsApp, e-mail ou onde quiser.');
-      }).catch(() => {
-        alert('Erro ao copiar. Copie manualmente.');
-      });
-    }
+    async function baixarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      const texto = gerarResumoTexto();
 
-    function compartilharWhatsApp() {
-      const texto = encodeURIComponent(gerarResumo());
-      const url = https://wa.me/?text=${texto};
-      window.location.href = url;
+      const linhas = doc.splitTextToSize(texto, 180);
+      doc.text(linhas, 10, 20);
+
+      const cliente = document.getElementById('cliente').value || 'checklist';
+      const nomeArquivo = Checklist_${cliente.replace(/\s+/g, '_')}.pdf;
+
+      doc.save(nomeArquivo);
     }
   </script>
 </body>
