@@ -14,6 +14,8 @@
     button { display: block; margin: 15px auto; padding: 12px 24px; background: #3498db; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; }
     button:hover { background: #2980b9; }
     #rodape { text-align: center; margin-top: 40px; color: #666; font-size: 0.9em; }
+    #download-area { text-align: center; margin-top: 10px; }
+    #download-area a { font-weight: bold; color: #2980b9; text-decoration: underline; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -38,6 +40,8 @@
   <button onclick="resetChecklist()">Limpar Checklist</button>
   <button onclick="baixarPDF()">📥 Baixar PDF do Checklist</button>
 
+  <div id="download-area"></div>
+
   <div id="rodape">
     Empresa: <strong>GLOBE MOTORHOMES</strong>
   </div>
@@ -61,6 +65,7 @@
       });
       document.getElementById('cliente').value = '';
       document.getElementById('responsavel').value = '';
+      document.getElementById('download-area').innerHTML = '';
     }
 
     function gerarResumoTexto() {
@@ -97,14 +102,9 @@
         const pdfBlob = doc.output('blob');
         const pdfUrl = URL.createObjectURL(pdfBlob);
 
-        // Criar link de download invisível
-        const link = document.createElement('a');
-        link.href = pdfUrl;
-        link.download = nomeArquivo;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(pdfUrl);
+        // Colocar link visível para download
+        const downloadArea = document.getElementById('download-area');
+        downloadArea.innerHTML = <a id="linkDownload" href="${pdfUrl}" download="${nomeArquivo}">Clique aqui para baixar seu PDF</a>;
       } catch (error) {
         alert('Erro ao gerar PDF: ' + error.message);
         console.error(error);
