@@ -36,16 +36,21 @@
 
   <button onclick="resetChecklist()">Limpar Checklist</button>
   <button onclick="window.print()">Imprimir / Salvar como PDF</button>
-  <button onclick="copiarResumo()">Copiar resumo para envio</button>
-  <button onclick="compartilharWhatsApp()">Compartilhar via WhatsApp</button>
+  <button onclick="copiarResumo()">Copiar resumo</button>
+  <button onclick="compartilharWhatsApp()">📲 Compartilhar via WhatsApp</button>
 
   <div id="rodape">
-    Checklist preenchido por: <strong>Hyago Sousa</strong>
+    Checklist preenchido por: <strong>Hyago Sousa</strong><br>
+    Empresa: <strong>GLOBE MOTORHOMES</strong>
   </div>
 
   <script>
     function check(cb) {
-      cb.parentElement.classList.toggle('checked', cb.checked);
+      if(cb.checked) {
+        cb.parentElement.classList.add('checked');
+      } else {
+        cb.parentElement.classList.remove('checked');
+      }
     }
 
     function resetChecklist() {
@@ -58,33 +63,35 @@
     function gerarResumo() {
       const cliente = document.getElementById('cliente').value || '[Sem nome]';
       const agora = new Date();
-      const dataHoraFormatada = agora.toLocaleString('pt-BR', { hour12: false });
+      const dataHora = agora.toLocaleString('pt-BR', { hour12: false });
       const itens = document.querySelectorAll('#checklist li');
-      let resumo = Checklist - Instalação Elétrica\nCliente: ${cliente}\nData/Hora finalização: ${dataHoraFormatada}\n\nItens:\n;
+
+      let texto = 📋 *Checklist - Instalação Elétrica*\n👤 Cliente: ${cliente}\n🕒 Data/Hora: ${dataHora}\n\n✅ Itens:\n;
 
       itens.forEach(li => {
         const checkbox = li.querySelector('input[type="checkbox"]');
-        const status = checkbox.checked ? 'Sim' : 'Não';
-        resumo += - ${li.textContent.trim()}: ${status}\n;
+        const status = checkbox.checked ? '✅ SIM' : '❌ NÃO';
+        texto += - ${li.textContent.trim()}: ${status}\n;
       });
 
-      return resumo;
+      texto += \n🔧 Realizado por: Hyago Sousa\n🏢 Empresa: GLOBE MOTORHOMES;
+
+      return texto;
     }
 
     function copiarResumo() {
       const resumo = gerarResumo();
       navigator.clipboard.writeText(resumo).then(() => {
-        alert('Resumo do checklist copiado! Agora cole no seu e-mail ou WhatsApp para enviar.');
+        alert('Resumo copiado! Cole no WhatsApp, e-mail ou onde quiser.');
       }).catch(() => {
-        alert('Falha ao copiar para a área de transferência. Tente copiar manualmente.');
+        alert('Erro ao copiar. Copie manualmente.');
       });
     }
 
     function compartilharWhatsApp() {
-      const resumo = gerarResumo();
-      const texto = encodeURIComponent(resumo);
+      const texto = encodeURIComponent(gerarResumo());
       const url = https://api.whatsapp.com/send?text=${texto};
-      window.open(url, '_blank');
+      window.open(url, '_blank', 'noopener,noreferrer');
     }
   </script>
 </body>
