@@ -91,12 +91,22 @@
         const linhas = doc.splitTextToSize(texto, 180);
         doc.text(linhas, 10, 20);
 
-        const pdfBlob = doc.output('blob');
-        const url = URL.createObjectURL(pdfBlob);
+        const cliente = document.getElementById('cliente').value || 'checklist';
+        const nomeArquivo = Checklist_${cliente.replace(/\s+/g, '_')}.pdf;
 
-        window.open(url, '_blank'); // Abre o PDF em nova aba (funciona em iPhone, Android e PC)
+        const pdfBlob = doc.output('blob');
+        const pdfUrl = URL.createObjectURL(pdfBlob);
+
+        // Criar link de download invisível
+        const link = document.createElement('a');
+        link.href = pdfUrl;
+        link.download = nomeArquivo;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(pdfUrl);
       } catch (error) {
-        alert('Erro ao gerar o PDF: ' + error.message);
+        alert('Erro ao gerar PDF: ' + error.message);
         console.error(error);
       }
     }
