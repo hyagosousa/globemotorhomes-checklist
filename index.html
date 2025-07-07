@@ -17,7 +17,7 @@
     input[type="checkbox"] { margin-right: 15px; }
     .checked { text-decoration: line-through; color: #888; }
     button {
-      display: block; margin: 20px auto; padding: 12px 30px; font-size: 16px;
+      display: block; margin: 10px auto; padding: 12px 30px; font-size: 16px;
       background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;
     }
     button:hover { background: #2980b9; }
@@ -46,6 +46,7 @@
 
   <button onclick="limparChecklist()">Limpar Checklist</button>
   <button onclick="gerarPDF()">📥 Baixar PDF do Checklist</button>
+  <button onclick="enviarWhatsApp()">📤 Enviar via WhatsApp</button>
 
   <div id="rodape">
     Empresa: <strong>GLOBE MOTORHOMES</strong>
@@ -108,7 +109,34 @@
 
       doc.save(`Checklist_${cliente.replace(/\s+/g, "_")}.pdf`);
     }
+
+    function enviarWhatsApp() {
+      const cliente = document.getElementById('cliente').value || '[Sem nome]';
+      const responsavel = document.getElementById('responsavel').value || '[Não informado]';
+      const agora = new Date();
+      const dataHora = agora.toLocaleString('pt-BR', { hour12: false });
+
+      let mensagem = `📋 *Checklist - Instalação Elétrica*%0A`;
+      mensagem += `👤 *Cliente:* ${cliente}%0A`;
+      mensagem += `🧰 *Responsável:* ${responsavel}%0A`;
+      mensagem += `📅 *Data/Hora:* ${dataHora}%0A%0A`;
+      mensagem += `✅ *Itens:*%0A`;
+
+      const itens = document.querySelectorAll('#checklist li');
+      itens.forEach((li) => {
+        const cb = li.querySelector('input[type="checkbox"]');
+        const status = cb.checked ? "✅" : "❌";
+        const texto = li.textContent.trim();
+        mensagem += `${status} ${texto}%0A`;
+      });
+
+      mensagem += `%0A🚐 *Empresa: GLOBE MOTORHOMES*`;
+
+      const url = `https://wa.me/?text=${encodeURIComponent(mensagem)}`;
+      window.open(url, '_blank');
+    }
   </script>
 
 </body>
 </html>
+
