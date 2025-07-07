@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Globe Motorhomes – Checklist Instalação Elétrica</title>
   <style>
     body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
     h1 { text-align: center; color: #2c3e50; }
-    #cliente { margin: 0 auto 20px; display: block; width: 100%; max-width: 500px; padding: 10px; }
+    #cliente, #dataHora { margin: 0 auto 15px; display: block; width: 100%; max-width: 500px; padding: 10px; }
     ul { list-style: none; padding: 0; max-width: 500px; margin: auto; }
     li { background: #fff; margin: 8px 0; padding: 12px; border-radius: 6px; display: flex; align-items: center; }
     input[type="checkbox"] { margin-right: 15px; }
     .checked { text-decoration: line-through; color: #aaa; }
-    button { display: block; margin: 20px auto; padding: 12px 24px; background: #3498db; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; }
+    button { display: block; margin: 15px auto; padding: 12px 24px; background: #3498db; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; }
     button:hover { background: #2980b9; }
     #rodape { text-align: center; margin-top: 40px; color: #666; font-size: 0.9em; }
   </style>
 </head>
 <body>
   <h1>Checklist Instalação Elétrica</h1>
+
   <input type="text" id="cliente" placeholder="Nome do cliente" />
+
+  <input type="text" id="dataHora" readonly />
 
   <ul id="checklist">
     <li><input type="checkbox" onchange="check(this)">Instalar disjuntores no quadro principal</li>
@@ -35,21 +38,54 @@
 
   <button onclick="resetChecklist()">Limpar Checklist</button>
   <button onclick="window.print()">Imprimir / Salvar como PDF</button>
+  <button onclick="enviarEmail()">Enviar por e-mail</button>
 
   <div id="rodape">
     Checklist preenchido por: <strong>Hyago Sousa</strong>
   </div>
 
   <script>
-    function check(cb) {
-      cb.parentElement.classList.toggle("checked", cb.checked);
+    // Exibe data e hora atual no campo
+    function atualizarDataHora() {
+      const agora = new Date();
+      const dataHoraFormatada = agora.toLocaleString('pt-BR', { hour12: false });
+      document.getElementById('dataHora').value = Data/Hora: ${dataHoraFormatada};
     }
+
+    // Marcar texto riscado
+    function check(cb) {
+      cb.parentElement.classList.toggle('checked', cb.checked);
+    }
+
+    // Limpar checklist
     function resetChecklist() {
-      document.querySelectorAll("input[type='checkbox']").forEach(cb => {
+      document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
         cb.checked = false;
-        cb.parentElement.classList.remove("checked");
+        cb.parentElement.classList.remove('checked');
       });
     }
+
+    // Criar resumo e abrir e-mail
+    function enviarEmail() {
+      const cliente = document.getElementById('cliente').value || '[Sem nome]';
+      const dataHora = document.getElementById('dataHora').value;
+      const itens = document.querySelectorAll('#checklist li');
+      let resumo = Checklist - Instalação Elétrica\nCliente: ${cliente}\n${dataHora}\n\nItens:\n;
+
+      itens.forEach(li => {
+        const checkbox = li.querySelector('input[type="checkbox"]');
+        const status = checkbox.checked ? 'Sim' : 'Não';
+        resumo += - ${li.textContent.trim()}: ${status}\n;
+      });
+
+      const assunto = encodeURIComponent('Checklist Instalação Elétrica');
+      const corpo = encodeURIComponent(resumo);
+
+      window.location.href = mailto:?subject=${assunto}&body=${corpo};
+    }
+
+    // Atualiza data/hora quando carregar a página
+    window.onload = atualizarDataHora;
   </script>
 </body>
 </html>
