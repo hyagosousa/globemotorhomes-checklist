@@ -90,8 +90,8 @@
 
     function compartilharWhatsApp() {
       const texto = encodeURIComponent(gerarResumo());
-      const url = https://api.whatsapp.com/send?text=${texto};
-      window.open(url, '_blank', 'noopener,noreferrer');
+      const url = https://wa.me/?text=${texto};
+      window.location.href = url;
     }
   </script>
 </body>
