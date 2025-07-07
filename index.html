@@ -116,21 +116,21 @@
       const agora = new Date();
       const dataHora = agora.toLocaleString('pt-BR', { hour12: false });
 
-      let mensagem = `📋 *Checklist - Instalação Elétrica*%0A`;
-      mensagem += `👤 *Cliente:* ${cliente}%0A`;
-      mensagem += `🧰 *Responsável:* ${responsavel}%0A`;
-      mensagem += `📅 *Data/Hora:* ${dataHora}%0A%0A`;
-      mensagem += `✅ *Itens:*%0A`;
+      let mensagem = `📋 *Checklist de Instalação Elétrica*\n\n`;
+      mensagem += `👤 *Cliente:* ${cliente}\n`;
+      mensagem += `🧰 *Responsável:* ${responsavel}\n`;
+      mensagem += `📅 *Data/Hora:* ${dataHora}\n\n`;
+      mensagem += `🔌 *Itens Verificados:*\n`;
 
       const itens = document.querySelectorAll('#checklist li');
       itens.forEach((li) => {
         const cb = li.querySelector('input[type="checkbox"]');
         const status = cb.checked ? "✅" : "❌";
         const texto = li.textContent.trim();
-        mensagem += `${status} ${texto}%0A`;
+        mensagem += `${status} ${texto}\n`;
       });
 
-      mensagem += `%0A🚐 *Empresa: GLOBE MOTORHOMES*`;
+      mensagem += `\n🚐 *Empresa: GLOBE MOTORHOMES*`;
 
       const url = `https://wa.me/?text=${encodeURIComponent(mensagem)}`;
       window.open(url, '_blank');
@@ -139,4 +139,5 @@
 
 </body>
 </html>
+
 
