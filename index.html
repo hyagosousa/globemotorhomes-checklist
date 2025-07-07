@@ -102,7 +102,7 @@
         const pdfBlob = doc.output('blob');
         const pdfUrl = URL.createObjectURL(pdfBlob);
 
-        // Criar link de download invisível
+        // Criar link invisível para download automático
         const link = document.createElement('a');
         link.href = pdfUrl;
         link.download = nomeArquivo;
@@ -111,9 +111,9 @@
         document.body.removeChild(link);
         URL.revokeObjectURL(pdfUrl);
 
-        // Também criar link visível para garantia
+        // Criar link visível como garantia
         const downloadArea = document.getElementById('download-area');
-       downloadArea.innerHTML = <a href="${pdfUrl}" download="${nomeArquivo}">Clique aqui para baixar seu PDF</a>;
+        downloadArea.innerHTML = <a href="${pdfUrl}" download="${nomeArquivo}">Clique aqui para baixar seu PDF</a>;
       } catch (error) {
         alert('Erro ao gerar PDF: ' + error.message);
         console.error(error);
