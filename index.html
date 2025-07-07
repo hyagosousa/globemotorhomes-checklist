@@ -1,1 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Globe Motorhomes – Checklist Instalação Elétrica</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+    h1 { text-align: center; color: #2c3e50; }
+    #cliente { margin: 0 auto 20px; display: block; width: 100%; max-width: 500px; padding: 10px; }
+    ul { list-style: none; padding: 0; max-width: 500px; margin: auto; }
+    li { background: #fff; margin: 8px 0; padding: 12px; border-radius: 6px; display: flex; align-items: center; }
+    input[type="checkbox"] { margin-right: 15px; }
+    .checked { text-decoration: line-through; color: #aaa; }
+    button { display: block; margin: 20px auto; padding: 12px 24px; background: #3498db; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; }
+    button:hover { background: #2980b9; }
+    #rodape { text-align: center; margin-top: 40px; color: #666; font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <h1>Checklist Instalação Elétrica</h1>
+  <input type="text" id="cliente" placeholder="Nome do cliente" />
 
+  <ul id="checklist">
+    <li><input type="checkbox" onchange="check(this)">Instalar disjuntores no quadro principal</li>
+    <li><input type="checkbox" onchange="check(this)">Fazer passagem de cabos 12V e 220V</li>
+    <li><input type="checkbox" onchange="check(this)">Fixar baterias e verificar conexões</li>
+    <li><input type="checkbox" onchange="check(this)">Conectar inversor de tensão</li>
+    <li><input type="checkbox" onchange="check(this)">Verificar fusíveis e proteções</li>
+    <li><input type="checkbox" onchange="check(this)">Testar iluminação interna</li>
+    <li><input type="checkbox" onchange="check(this)">Testar tomadas 12V e 220V</li>
+    <li><input type="checkbox" onchange="check(this)">Testar carregamento solar</li>
+    <li><input type="checkbox" onchange="check(this)">Testar carregador veicular (alternador)</li>
+    <li><input type="checkbox" onchange="check(this)">Teste geral de consumo e autonomia</li>
+  </ul>
+
+  <button onclick="resetChecklist()">Limpar Checklist</button>
+  <button onclick="window.print()">Imprimir / Salvar como PDF</button>
+
+  <div id="rodape">
+    Checklist preenchido por: <strong>Hyago Sousa</strong>
+  </div>
+
+  <script>
+    function check(cb) {
+      cb.parentElement.classList.toggle("checked", cb.checked);
+    }
+    function resetChecklist() {
+      document.querySelectorAll("input[type='checkbox']").forEach(cb => {
+        cb.checked = false;
+        cb.parentElement.classList.remove("checked");
+      });
+    }
+  </script>
+</body>
+</html>
