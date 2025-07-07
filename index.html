@@ -6,7 +6,7 @@
   <style>
     body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
     h1 { text-align: center; color: #2c3e50; }
-    #cliente, #dataHora { margin: 0 auto 15px; display: block; width: 100%; max-width: 500px; padding: 10px; }
+    #cliente { margin: 0 auto 15px; display: block; width: 100%; max-width: 500px; padding: 10px; }
     ul { list-style: none; padding: 0; max-width: 500px; margin: auto; }
     li { background: #fff; margin: 8px 0; padding: 12px; border-radius: 6px; display: flex; align-items: center; }
     input[type="checkbox"] { margin-right: 15px; }
@@ -20,8 +20,6 @@
   <h1>Checklist Instalação Elétrica</h1>
 
   <input type="text" id="cliente" placeholder="Nome do cliente" />
-
-  <input type="text" id="dataHora" readonly />
 
   <ul id="checklist">
     <li><input type="checkbox" onchange="check(this)">Instalar disjuntores no quadro principal</li>
@@ -38,26 +36,18 @@
 
   <button onclick="resetChecklist()">Limpar Checklist</button>
   <button onclick="window.print()">Imprimir / Salvar como PDF</button>
-  <button onclick="enviarEmail()">Enviar por e-mail</button>
+  <button onclick="copiarResumo()">Copiar resumo para envio</button>
+  <button onclick="compartilharWhatsApp()">Compartilhar via WhatsApp</button>
 
   <div id="rodape">
     Checklist preenchido por: <strong>Hyago Sousa</strong>
   </div>
 
   <script>
-    // Exibe data e hora atual no campo
-    function atualizarDataHora() {
-      const agora = new Date();
-      const dataHoraFormatada = agora.toLocaleString('pt-BR', { hour12: false });
-      document.getElementById('dataHora').value = Data/Hora: ${dataHoraFormatada};
-    }
-
-    // Marcar texto riscado
     function check(cb) {
       cb.parentElement.classList.toggle('checked', cb.checked);
     }
 
-    // Limpar checklist
     function resetChecklist() {
       document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
         cb.checked = false;
@@ -65,12 +55,12 @@
       });
     }
 
-    // Criar resumo e abrir e-mail
-    function enviarEmail() {
+    function gerarResumo() {
       const cliente = document.getElementById('cliente').value || '[Sem nome]';
-      const dataHora = document.getElementById('dataHora').value;
+      const agora = new Date();
+      const dataHoraFormatada = agora.toLocaleString('pt-BR', { hour12: false });
       const itens = document.querySelectorAll('#checklist li');
-      let resumo = Checklist - Instalação Elétrica\nCliente: ${cliente}\n${dataHora}\n\nItens:\n;
+      let resumo = Checklist - Instalação Elétrica\nCliente: ${cliente}\nData/Hora finalização: ${dataHoraFormatada}\n\nItens:\n;
 
       itens.forEach(li => {
         const checkbox = li.querySelector('input[type="checkbox"]');
@@ -78,14 +68,24 @@
         resumo += - ${li.textContent.trim()}: ${status}\n;
       });
 
-      const assunto = encodeURIComponent('Checklist Instalação Elétrica');
-      const corpo = encodeURIComponent(resumo);
-
-      window.location.href = mailto:?subject=${assunto}&body=${corpo};
+      return resumo;
     }
 
-    // Atualiza data/hora quando carregar a página
-    window.onload = atualizarDataHora;
+    function copiarResumo() {
+      const resumo = gerarResumo();
+      navigator.clipboard.writeText(resumo).then(() => {
+        alert('Resumo do checklist copiado! Agora cole no seu e-mail ou WhatsApp para enviar.');
+      }).catch(() => {
+        alert('Falha ao copiar para a área de transferência. Tente copiar manualmente.');
+      });
+    }
+
+    function compartilharWhatsApp() {
+      const resumo = gerarResumo();
+      const texto = encodeURIComponent(resumo);
+      const url = https://api.whatsapp.com/send?text=${texto};
+      window.open(url, '_blank');
+    }
   </script>
 </body>
 </html>
