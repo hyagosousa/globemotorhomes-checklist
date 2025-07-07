@@ -4,14 +4,23 @@
   <meta charset="UTF-8" />
   <title>Checklist Elétrico - Globe Motorhomes</title>
   <style>
-    /* Seu estilo aqui */
+    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+    h1 { text-align: center; color: #2c3e50; }
+    .campo-texto { margin: 0 auto 15px; display: block; width: 100%; max-width: 500px; padding: 10px; }
+    ul { list-style: none; padding: 0; max-width: 500px; margin: auto; }
+    li { background: #fff; margin: 8px 0; padding: 12px; border-radius: 6px; display: flex; align-items: center; }
+    input[type="checkbox"] { margin-right: 15px; }
+    .checked { text-decoration: line-through; color: #aaa; }
+    button { display: block; margin: 15px auto; padding: 12px 24px; background: #3498db; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; }
+    button:hover { background: #2980b9; }
+    #rodape { text-align: center; margin-top: 40px; color: #666; font-size: 0.9em; }
   </style>
 </head>
 <body>
   <h1>Checklist Instalação Elétrica</h1>
 
-  <input type="text" id="cliente" placeholder="Nome do cliente" />
-  <input type="text" id="responsavel" placeholder="Nome de quem preencheu o checklist" />
+  <input type="text" id="cliente" class="campo-texto" placeholder="Nome do cliente" />
+  <input type="text" id="responsavel" class="campo-texto" placeholder="Nome de quem preencheu o checklist" />
 
   <ul id="checklist">
     <li><input type="checkbox" onchange="check(this)">Instalar disjuntores no quadro principal</li>
@@ -33,7 +42,9 @@
     Empresa: <strong>GLOBE MOTORHOMES</strong>
   </div>
 
+  <!-- Biblioteca jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
   <script>
     function check(cb) {
       if(cb.checked) {
@@ -80,11 +91,10 @@
         const linhas = doc.splitTextToSize(texto, 180);
         doc.text(linhas, 10, 20);
 
-        const cliente = document.getElementById('cliente').value || 'checklist';
-        const nomeArquivo = Checklist_${cliente.replace(/\s+/g, '_')}.pdf;
+        const pdfBlob = doc.output('blob');
+        const url = URL.createObjectURL(pdfBlob);
 
-        // Força o download direto, método do jsPDF
-        doc.save(nomeArquivo);
+        window.open(url, '_blank'); // Abre o PDF em nova aba (funciona em iPhone, Android e PC)
       } catch (error) {
         alert('Erro ao gerar o PDF: ' + error.message);
         console.error(error);
