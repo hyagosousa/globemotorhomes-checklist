@@ -2,123 +2,113 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Checklist Elétrico - Globe Motorhomes</title>
+  <title>Checklist Instalação Elétrica - GLOBE MOTORHOMES</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
     h1 { text-align: center; color: #2c3e50; }
-    .campo-texto { margin: 0 auto 15px; display: block; width: 100%; max-width: 500px; padding: 10px; }
-    ul { list-style: none; padding: 0; max-width: 500px; margin: auto; }
-    li { background: #fff; margin: 8px 0; padding: 12px; border-radius: 6px; display: flex; align-items: center; }
+    input[type="text"] {
+      display: block; width: 100%; max-width: 500px; margin: 10px auto; padding: 10px;
+      font-size: 16px; border-radius: 5px; border: 1px solid #ccc;
+    }
+    ul { list-style: none; max-width: 500px; margin: 20px auto; padding: 0; }
+    li {
+      background: white; margin: 8px 0; padding: 12px; border-radius: 6px; display: flex; align-items: center;
+    }
     input[type="checkbox"] { margin-right: 15px; }
-    .checked { text-decoration: line-through; color: #aaa; }
-    button { display: block; margin: 15px auto; padding: 12px 24px; background: #3498db; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; }
+    .checked { text-decoration: line-through; color: #888; }
+    button {
+      display: block; margin: 20px auto; padding: 12px 30px; font-size: 16px;
+      background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;
+    }
     button:hover { background: #2980b9; }
     #rodape { text-align: center; margin-top: 40px; color: #666; font-size: 0.9em; }
-    #download-area { text-align: center; margin-top: 10px; }
-    #download-area a { font-weight: bold; color: #2980b9; text-decoration: underline; cursor: pointer; }
   </style>
 </head>
 <body>
+
   <h1>Checklist Instalação Elétrica</h1>
 
-  <input type="text" id="cliente" class="campo-texto" placeholder="Nome do cliente" />
-  <input type="text" id="responsavel" class="campo-texto" placeholder="Nome de quem preencheu o checklist" />
+  <input type="text" id="cliente" placeholder="Nome do cliente" />
+  <input type="text" id="responsavel" placeholder="Nome de quem preencheu o checklist" />
 
   <ul id="checklist">
-    <li><input type="checkbox" onchange="check(this)">Instalar disjuntores no quadro principal</li>
-    <li><input type="checkbox" onchange="check(this)">Fazer passagem de cabos 12V e 220V</li>
-    <li><input type="checkbox" onchange="check(this)">Fixar baterias e verificar conexões</li>
-    <li><input type="checkbox" onchange="check(this)">Conectar inversor de tensão</li>
-    <li><input type="checkbox" onchange="check(this)">Verificar fusíveis e proteções</li>
-    <li><input type="checkbox" onchange="check(this)">Testar iluminação interna</li>
-    <li><input type="checkbox" onchange="check(this)">Testar tomadas 12V e 220V</li>
-    <li><input type="checkbox" onchange="check(this)">Testar carregamento solar</li>
-    <li><input type="checkbox" onchange="check(this)">Testar carregador veicular (alternador)</li>
-    <li><input type="checkbox" onchange="check(this)">Teste geral de consumo e autonomia</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Instalar disjuntores no quadro principal</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Fazer passagem de cabos 12V e 220V</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Fixar baterias e verificar conexões</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Conectar inversor de tensão</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Verificar fusíveis e proteções</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Testar iluminação interna</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Testar tomadas 12V e 220V</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Testar carregamento solar</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Testar carregador veicular (alternador)</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Teste geral de consumo e autonomia</li>
   </ul>
 
-  <button onclick="resetChecklist()">Limpar Checklist</button>
-  <button onclick="baixarPDF()">📥 Baixar PDF do Checklist</button>
-
-  <div id="download-area"></div>
+  <button onclick="limparChecklist()">Limpar Checklist</button>
+  <button onclick="gerarPDF()">📥 Baixar PDF do Checklist</button>
 
   <div id="rodape">
     Empresa: <strong>GLOBE MOTORHOMES</strong>
   </div>
 
-  <!-- Biblioteca jsPDF -->
+  <!-- jsPDF CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <script>
-    function check(cb) {
-      if(cb.checked) {
+    const { jsPDF } = window.jspdf;
+
+    function toggleCheck(cb) {
+      if (cb.checked) {
         cb.parentElement.classList.add('checked');
       } else {
         cb.parentElement.classList.remove('checked');
       }
     }
 
-    function resetChecklist() {
-      document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    function limparChecklist() {
+      document.querySelectorAll('#checklist input[type="checkbox"]').forEach(cb => {
         cb.checked = false;
         cb.parentElement.classList.remove('checked');
       });
       document.getElementById('cliente').value = '';
       document.getElementById('responsavel').value = '';
-      document.getElementById('download-area').innerHTML = '';
     }
 
-    function gerarResumoTexto() {
+    function gerarPDF() {
+      const doc = new jsPDF();
       const cliente = document.getElementById('cliente').value || '[Sem nome]';
       const responsavel = document.getElementById('responsavel').value || '[Não informado]';
       const agora = new Date();
       const dataHora = agora.toLocaleString('pt-BR', { hour12: false });
+
+      doc.setFontSize(18);
+      doc.text("Checklist Instalação Elétrica", 105, 20, null, null, "center");
+
+      doc.setFontSize(12);
+      doc.text(`Cliente: ${cliente}`, 20, 40);
+      doc.text(`Data/Hora: ${dataHora}`, 20, 50);
+      doc.text("Itens:", 20, 60);
+
       const itens = document.querySelectorAll('#checklist li');
-
-      let texto = Checklist - Instalação Elétrica\nCliente: ${cliente}\nData/Hora: ${dataHora}\n\nItens:\n;
-
-      itens.forEach(li => {
-        const checkbox = li.querySelector('input[type="checkbox"]');
-        const status = checkbox.checked ? '✅ SIM' : '❌ NÃO';
-        texto += - ${li.textContent.trim()}: ${status}\n;
+      let y = 70;
+      itens.forEach((li) => {
+        const cb = li.querySelector('input[type="checkbox"]');
+        const status = cb.checked ? "SIM" : "NÃO";
+        const texto = `- ${li.textContent.trim()}: ${status}`;
+        doc.text(texto, 25, y);
+        y += 10;
+        if (y > 280) {
+          doc.addPage();
+          y = 20;
+        }
       });
 
-      texto += \nResponsável pelo checklist: ${responsavel}\nEmpresa: GLOBE MOTORHOMES;
-      return texto;
-    }
+      doc.text(`Responsável pelo checklist: ${responsavel}`, 20, y + 10);
+      doc.text("Empresa: GLOBE MOTORHOMES", 20, y + 20);
 
-    async function baixarPDF() {
-      try {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        const texto = gerarResumoTexto();
-
-        const linhas = doc.splitTextToSize(texto, 180);
-        doc.text(linhas, 10, 20);
-
-        const cliente = document.getElementById('cliente').value || 'checklist';
-        const nomeArquivo = Checklist_${cliente.replace(/\s+/g, '_')}.pdf;
-
-        const pdfBlob = doc.output('blob');
-        const pdfUrl = URL.createObjectURL(pdfBlob);
-
-        // Criar link invisível para download automático
-        const link = document.createElement('a');
-        link.href = pdfUrl;
-        link.download = nomeArquivo;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(pdfUrl);
-
-        // Criar link visível como garantia
-        const downloadArea = document.getElementById('download-area');
-        downloadArea.innerHTML = <a href="${pdfUrl}" download="${nomeArquivo}">Clique aqui para baixar seu PDF</a>;
-      } catch (error) {
-        alert('Erro ao gerar PDF: ' + error.message);
-        console.error(error);
-      }
+      doc.save(`Checklist_${cliente.replace(/\s+/g, "_")}.pdf`);
     }
   </script>
+
 </body>
 </html>
