@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Checklist Instalação Elétrica - GLOBE MOTORHOMES</title>
+  <title>Checklist Fase 7 - GLOBE MOTORHOMES</title>
   <style>
     body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
     h1 { text-align: center; color: #2c3e50; }
@@ -43,6 +43,38 @@
     <li><input type="checkbox" onchange="toggleCheck(this)">Testar carregador veicular (alternador)</li>
     <li><input type="checkbox" onchange="toggleCheck(this)">Teste geral de consumo e autonomia</li>
   </ul>
+
+
+    <h1>ADESIVOS</h1>
+
+  <input type="text" id="cliente" placeholder="Nome do cliente" />
+  <input type="text" id="responsavel" placeholder="Nome de quem preencheu o checklist" />
+
+  <ul id="checklist">
+    <li><input type="checkbox" onchange="toggleCheck(this)"> Conferir adesivo GLOBE na abertura das portas traseiras</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo GLOBE na traseira do veículo
+</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo GLOBE na parte frontal do veículo</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo TOLDO</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo ESCADA</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo de LEMBRETE na porta dos disjuntores
+</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo de suporta 3KG nas gavetas</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo de ENTRAR SEM SAPATOS
+</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo de SEGURE NA ALÇA</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo no controle do ar condicionado ATENÇÃO, LEMBRAR DE ABRIR TULHA PARA LIGAR AR
+CONDICIONADO</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo dos DISJUNTORES (alternador)</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Adesivos externos: dreno água limpa (alternador)</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Adesivos externos: saída detritos</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Adesivos externos: água servida</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo do PAINEL ELÉTRICO (alternador)</li>
+  </ul>
+
+  <button onclick="limparChecklist()">Limpar Checklist</button>
+  <button onclick="gerarPDF()">📥 Baixar PDF do Checklist</button>
+  <button onclick="enviarWhatsApp()">📤 Enviar via WhatsApp</button>
 
   <button onclick="limparChecklist()">Limpar Checklist</button>
   <button onclick="gerarPDF()">📥 Baixar PDF do Checklist</button>
