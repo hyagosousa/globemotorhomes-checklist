@@ -72,6 +72,7 @@ CONDICIONADO</li>
 
    <h1>Banheiro</h1>
 
+
   
   <ul id="checklist">
     <li><input type="checkbox" onchange="toggleCheck(this)"> Conferir instalação do Kit Banheiro (saboneteira, ganchos para toalhas e porta papel higiênico</li>
@@ -89,7 +90,55 @@ CONDICIONADO</li>
 
   </ul>
 
+ <h1>Checklist Instalação Elétrica</h1>
 
+  <input type="text" id="cliente" placeholder="Nome do cliente" />
+  <input type="text" id="responsavel" placeholder="Nome de quem preencheu o checklist" />
+
+  <h1>Medidas e Informações Técnicas</h1>
+
+  <div style="max-width: 500px; margin: auto;">
+    <h3>Tanques:</h3>
+    <label>Água Limpa:
+      <select id="tanque_l_material">
+        <option value="">Selecione o material</option>
+        <option>Inox</option>
+        <option>Fibra</option>
+      </select>
+      <input type="number" id="tanque_l_litros" placeholder="Litros">
+    </label>
+
+    <label>Água Servida:
+      <select id="tanque_s_material">
+        <option value="">Selecione o material</option>
+        <option>Inox</option>
+        <option>Fibra</option>
+      </select>
+      <input type="number" id="tanque_s_litros" placeholder="Litros">
+    </label>
+
+    <label>Água Detritos:
+      <select id="tanque_d_material">
+        <option value="">Selecione o material</option>
+        <option>Inox</option>
+        <option>Fibra</option>
+      </select>
+      <input type="number" id="tanque_d_litros" placeholder="Litros">
+    </label>
+
+    <h3>Janelas:</h3>
+    <input type="text" id="janela_direita" placeholder="Janela Lado Direito (cm)">
+    <input type="text" id="janela_esquerda" placeholder="Janela Lado Esquerdo (cm)">
+    <input type="text" id="janela_dinete" placeholder="Janela Dinete (cm)">
+    <input type="text" id="janela_cozinha" placeholder="Janela Cozinha (cm)">
+
+    <h3>Camas:</h3>
+    <input type="text" id="cama_casal" placeholder="Cama Casal (Largura x Comprimento)">
+    <input type="text" id="cama_dinete" placeholder="Cama Dinete Expandida (L x C)">
+
+    <h3>Painel Solar:</h3>
+    <input type="text" id="painel_solar" placeholder="Marca e Medidas">
+  </div>
   <button onclick="limparChecklist()">Limpar Checklist</button>
   <button onclick="gerarPDF()">📥 Baixar PDF do Checklist</button>
   <button onclick="enviarWhatsApp()">📤 Enviar via WhatsApp</button>
