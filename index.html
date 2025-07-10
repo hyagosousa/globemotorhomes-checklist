@@ -6,7 +6,7 @@
   <style>
     body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
     h1 { text-align: center; color: #2c3e50; }
-    input[type="text"] {
+    input[type="text"], input[type="number"], select {
       display: block; width: 100%; max-width: 500px; margin: 10px auto; padding: 10px;
       font-size: 16px; border-radius: 5px; border: 1px solid #ccc;
     }
@@ -31,6 +31,51 @@
   <input type="text" id="cliente" placeholder="Nome do cliente" />
   <input type="text" id="responsavel" placeholder="Nome de quem preencheu o checklist" />
 
+  <h1>Medidas e Informações Técnicas</h1>
+
+  <div style="max-width: 500px; margin: auto;">
+    <h3>Tanques:</h3>
+    <label>Água Limpa:
+      <select id="tanque_l_material">
+        <option value="">Selecione o material</option>
+        <option>Inox</option>
+        <option>Fibra</option>
+      </select>
+      <input type="number" id="tanque_l_litros" placeholder="Litros">
+    </label>
+
+    <label>Água Servida:
+      <select id="tanque_s_material">
+        <option value="">Selecione o material</option>
+        <option>Inox</option>
+        <option>Fibra</option>
+      </select>
+      <input type="number" id="tanque_s_litros" placeholder="Litros">
+    </label>
+
+    <label>Água Detritos:
+      <select id="tanque_d_material">
+        <option value="">Selecione o material</option>
+        <option>Inox</option>
+        <option>Fibra</option>
+      </select>
+      <input type="number" id="tanque_d_litros" placeholder="Litros">
+    </label>
+
+    <h3>Janelas:</h3>
+    <input type="text" id="janela_direita" placeholder="Janela Lado Direito (cm)">
+    <input type="text" id="janela_esquerda" placeholder="Janela Lado Esquerdo (cm)">
+    <input type="text" id="janela_dinete" placeholder="Janela Dinete (cm)">
+    <input type="text" id="janela_cozinha" placeholder="Janela Cozinha (cm)">
+
+    <h3>Camas:</h3>
+    <input type="text" id="cama_casal" placeholder="Cama Casal (Largura x Comprimento)">
+    <input type="text" id="cama_dinete" placeholder="Cama Dinete Expandida (L x C)">
+
+    <h3>Painel Solar:</h3>
+    <input type="text" id="painel_solar" placeholder="Marca e Medidas">
+  </div>
+
   <ul id="checklist">
     <li><input type="checkbox" onchange="toggleCheck(this)">Instalar disjuntores no quadro principal</li>
     <li><input type="checkbox" onchange="toggleCheck(this)">Fazer passagem de cabos 12V e 220V</li>
@@ -44,25 +89,18 @@
     <li><input type="checkbox" onchange="toggleCheck(this)">Teste geral de consumo e autonomia</li>
   </ul>
 
-
-    <h1>ADESIVOS</h1>
-
-  
+  <h1>ADESIVOS</h1>
   <ul id="checklist">
-    <li><input type="checkbox" onchange="toggleCheck(this)"> Conferir adesivo GLOBE na abertura das portas traseiras</li>
-    <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo GLOBE na traseira do veículo
-</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo GLOBE na abertura das portas traseiras</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo GLOBE na traseira do veículo</li>
     <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo GLOBE na parte frontal do veículo</li>
     <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo TOLDO</li>
     <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo ESCADA</li>
-    <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo de LEMBRETE na porta dos disjuntores
-</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo de LEMBRETE na porta dos disjuntores</li>
     <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo de suporta 3KG nas gavetas</li>
-    <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo de ENTRAR SEM SAPATOS
-</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo de ENTRAR SEM SAPATOS</li>
     <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo de SEGURE NA ALÇA</li>
-    <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo no controle do ar condicionado ATENÇÃO, LEMBRAR DE ABRIR TULHA PARA LIGAR AR
-CONDICIONADO</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo no controle do ar condicionado ATENÇÃO, LEMBRAR DE ABRIR TULHA PARA LIGAR AR CONDICIONADO</li>
     <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo dos DISJUNTORES (alternador)</li>
     <li><input type="checkbox" onchange="toggleCheck(this)">Adesivos externos: dreno água limpa (alternador)</li>
     <li><input type="checkbox" onchange="toggleCheck(this)">Adesivos externos: saída detritos</li>
@@ -70,25 +108,15 @@ CONDICIONADO</li>
     <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo do PAINEL ELÉTRICO (alternador)</li>
   </ul>
 
-   <h1>Banheiro</h1>
-
-  
+  <h1>Banheiro</h1>
   <ul id="checklist">
-    <li><input type="checkbox" onchange="toggleCheck(this)"> Conferir instalação do Kit Banheiro (saboneteira, ganchos para toalhas e porta papel higiênico</li>
-    <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo GLOBE na traseira do veículo
-</li>
-    <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo GLOBE na parte frontal do veículo</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Conferir instalação do Kit Banheiro (saboneteira, ganchos para toalhas e porta papel higiênico)</li>
     <li><input type="checkbox" onchange="toggleCheck(this)">Conferir trincas ou pequenos furos no piso de pastilha do banheiro</li>
-    <li><input type="checkbox" onchange="toggleCheck(this)">Conferir pintura de PU do box
-</li>
-    <li><input type="checkbox" onchange="toggleCheck(this)">Conferir se há vazamento da ducha higiênica e demais conexões
-</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Conferir pintura de PU do box</li>
+    <li><input type="checkbox" onchange="toggleCheck(this)">Conferir se há vazamento da ducha higiênica e demais conexões</li>
     <li><input type="checkbox" onchange="toggleCheck(this)">Conferir se saboneteira, porta papel higiênico, registros, acabamento de registro, etc, estão instalados de forma firme</li>
-</li>
     <li><input type="checkbox" onchange="toggleCheck(this)">Testar a porta de entrada das células de banheiro: se correm de forma leve sem agarrar</li>
-
   </ul>
-
 
   <button onclick="limparChecklist()">Limpar Checklist</button>
   <button onclick="gerarPDF()">📥 Baixar PDF do Checklist</button>
@@ -98,18 +126,13 @@ CONDICIONADO</li>
     Empresa: <strong>GLOBE MOTORHOMES</strong>
   </div>
 
-  <!-- jsPDF CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
   <script>
     const { jsPDF } = window.jspdf;
 
     function toggleCheck(cb) {
-      if (cb.checked) {
-        cb.parentElement.classList.add('checked');
-      } else {
-        cb.parentElement.classList.remove('checked');
-      }
+      if (cb.checked) cb.parentElement.classList.add('checked');
+      else cb.parentElement.classList.remove('checked');
     }
 
     function limparChecklist() {
@@ -117,8 +140,8 @@ CONDICIONADO</li>
         cb.checked = false;
         cb.parentElement.classList.remove('checked');
       });
-      document.getElementById('cliente').value = '';
-      document.getElementById('responsavel').value = '';
+      document.querySelectorAll('input[type="text"], input[type="number"]').forEach(el => el.value = '');
+      document.querySelectorAll('select').forEach(el => el.value = '');
     }
 
     function gerarPDF() {
@@ -132,28 +155,35 @@ CONDICIONADO</li>
       doc.text("Checklist Instalação Elétrica", 105, 20, null, null, "center");
 
       doc.setFontSize(12);
-      doc.text(`Cliente: ${cliente}`, 20, 40);
-      doc.text(`Data/Hora: ${dataHora}`, 20, 50);
-      doc.text("Itens:", 20, 60);
+      doc.text(Cliente: ${cliente}, 20, 40);
+      doc.text(Data/Hora: ${dataHora}, 20, 50);
+
+      let y = 60;
+
+      doc.text("Medidas Técnicas:", 20, y); y += 10;
+      doc.text(Tanque Água Limpa: ${document.getElementById('tanque_l_material').value} - ${document.getElementById('tanque_l_litros').value}L, 25, y); y += 10;
+      doc.text(Tanque Água Servida: ${document.getElementById('tanque_s_material').value} - ${document.getElementById('tanque_s_litros').value}L, 25, y); y += 10;
+      doc.text(Tanque Detritos: ${document.getElementById('tanque_d_material').value} - ${document.getElementById('tanque_d_litros').value}L, 25, y); y += 10;
+      doc.text(Janelas: Dir(${document.getElementById('janela_direita').value}), Esq(${document.getElementById('janela_esquerda').value}), Din(${document.getElementById('janela_dinete').value}), Coz(${document.getElementById('janela_cozinha').value}), 25, y); y += 10;
+      doc.text(Cama Casal: ${document.getElementById('cama_casal').value}, 25, y); y += 10;
+      doc.text(Cama Dinete: ${document.getElementById('cama_dinete').value}, 25, y); y += 10;
+      doc.text(Painel Solar: ${document.getElementById('painel_solar').value}, 25, y); y += 10;
+
+      doc.text("Itens Verificados:", 20, y); y += 10;
 
       const itens = document.querySelectorAll('#checklist li');
-      let y = 70;
       itens.forEach((li) => {
         const cb = li.querySelector('input[type="checkbox"]');
         const status = cb.checked ? "SIM" : "NÃO";
-        const texto = `- ${li.textContent.trim()}: ${status}`;
-        doc.text(texto, 25, y);
+        doc.text(- ${li.textContent.trim()}: ${status}, 25, y);
         y += 10;
-        if (y > 280) {
-          doc.addPage();
-          y = 20;
-        }
+        if (y > 280) { doc.addPage(); y = 20; }
       });
 
-      doc.text(`Responsável pelo checklist: ${responsavel}`, 20, y + 10);
+      doc.text(Responsável pelo checklist: ${responsavel}, 20, y + 10);
       doc.text("Empresa: GLOBE MOTORHOMES", 20, y + 20);
 
-      doc.save(`Checklist_${cliente.replace(/\s+/g, "_")}.pdf`);
+      doc.save(Checklist_${cliente.replace(/\s+/g, "_")}.pdf);
     }
 
     function enviarWhatsApp() {
@@ -162,28 +192,34 @@ CONDICIONADO</li>
       const agora = new Date();
       const dataHora = agora.toLocaleString('pt-BR', { hour12: false });
 
-      let mensagem = `📋 *Checklist de Instalação Elétrica*\n\n`;
-      mensagem += `👤 *Cliente:* ${cliente}\n`;
-      mensagem += `🧰 *Responsável:* ${responsavel}\n`;
-      mensagem += `📅 *Data/Hora:* ${dataHora}\n\n`;
-      mensagem += `🔌 *Itens Verificados:*\n`;
+      let mensagem = 📋 *Checklist de Instalação Elétrica*\n\n;
+      mensagem += 👤 *Cliente:* ${cliente}\n;
+      mensagem += 🧰 *Responsável:* ${responsavel}\n;
+      mensagem += 📅 *Data/Hora:* ${dataHora}\n\n;
+      mensagem += 🧪 *Medidas Técnicas:*\n;
+      mensagem += • Água Limpa: ${document.getElementById('tanque_l_material').value} - ${document.getElementById('tanque_l_litros').value}L\n;
+      mensagem += • Água Servida: ${document.getElementById('tanque_s_material').value} - ${document.getElementById('tanque_s_litros').value}L\n;
+      mensagem += • Água Detritos: ${document.getElementById('tanque_d_material').value} - ${document.getElementById('tanque_d_litros').value}L\n;
+      mensagem += • Janelas: Dir(${document.getElementById('janela_direita').value}), Esq(${document.getElementById('janela_esquerda').value}), Dinete(${document.getElementById('janela_dinete').value}), Cozinha(${document.getElementById('janela_cozinha').value})\n;
+      mensagem += • Cama Casal: ${document.getElementById('cama_casal').value}\n;
+      mensagem += • Cama Dinete: ${document.getElementById('cama_dinete').value}\n;
+      mensagem += • Painel Solar: ${document.getElementById('painel_solar').value}\n\n;
+      mensagem += 🔌 *Itens Verificados:*\n;
 
       const itens = document.querySelectorAll('#checklist li');
       itens.forEach((li) => {
         const cb = li.querySelector('input[type="checkbox"]');
         const status = cb.checked ? "✅" : "❌";
-        const texto = li.textContent.trim();
-        mensagem += `${status} ${texto}\n`;
+        mensagem += ${status} ${li.textContent.trim()}\n;
       });
 
-      mensagem += `\n🚐 *Empresa: GLOBE MOTORHOMES*`;
+      mensagem += \n🚐 *Empresa: GLOBE MOTORHOMES*;
 
-      const url = `https://wa.me/?text=${encodeURIComponent(mensagem)}`;
+      const url = https://wa.me/?text=${encodeURIComponent(mensagem)};
       window.open(url, '_blank');
     }
   </script>
 
 </body>
 </html>
-
 
