@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Checklist Fase 7 - GLOBE MOTORHOMES</title>
+  <title>CHECKLIST FASE 7 - GLOBE MOTORHOMES</title>
   <style>
     body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
     h1 { text-align: center; color: #2c3e50; }
@@ -26,7 +26,7 @@
 </head>
 <body>
 
-  <h1>Checklist Instalação Elétrica</h1>
+  <h1>CHECKLIST FASE 7</h1>
 
   <input type="text" id="cliente" placeholder="Nome do cliente" />
   <input type="text" id="responsavel" placeholder="Nome de quem preencheu o checklist" />
@@ -122,9 +122,6 @@
     Empresa: <strong>GLOBE MOTORHOMES</strong>
   </div>
 
-  <!-- jsPDF (caso queira ativar depois) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
   <script>
     function toggleCheck(cb) {
       cb.parentElement.classList.toggle('checked', cb.checked);
@@ -145,7 +142,7 @@
       const agora = new Date();
       const dataHora = agora.toLocaleString('pt-BR', { hour12: false });
 
-      let mensagem = `📋 *Checklist de Instalação Elétrica*\n\n`;
+      let mensagem = `📋 *CHECKLIST FASE 7*\n\n`;
       mensagem += `👤 *Cliente:* ${cliente}\n`;
       mensagem += `🧰 *Responsável:* ${responsavel}\n`;
       mensagem += `📅 *Data/Hora:* ${dataHora}\n\n`;
@@ -179,3 +176,4 @@
   </script>
 </body>
 </html>
+
