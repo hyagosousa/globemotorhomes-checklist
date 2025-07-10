@@ -76,7 +76,7 @@
     <input type="text" id="painel_solar" placeholder="Marca e Medidas">
   </div>
 
-  <ul id="checklist">
+  <ul class="checklist">
     <li><input type="checkbox" onchange="toggleCheck(this)">Instalar disjuntores no quadro principal</li>
     <li><input type="checkbox" onchange="toggleCheck(this)">Fazer passagem de cabos 12V e 220V</li>
     <li><input type="checkbox" onchange="toggleCheck(this)">Fixar baterias e verificar conexões</li>
@@ -90,7 +90,7 @@
   </ul>
 
   <h1>ADESIVOS</h1>
-  <ul id="checklist">
+  <ul class="checklist">
     <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo GLOBE na abertura das portas traseiras</li>
     <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo GLOBE na traseira do veículo</li>
     <li><input type="checkbox" onchange="toggleCheck(this)">Conferir adesivo GLOBE na parte frontal do veículo</li>
@@ -109,7 +109,7 @@
   </ul>
 
   <h1>Banheiro</h1>
-  <ul id="checklist">
+  <ul class="checklist">
     <li><input type="checkbox" onchange="toggleCheck(this)">Conferir instalação do Kit Banheiro (saboneteira, ganchos para toalhas e porta papel higiênico)</li>
     <li><input type="checkbox" onchange="toggleCheck(this)">Conferir trincas ou pequenos furos no piso de pastilha do banheiro</li>
     <li><input type="checkbox" onchange="toggleCheck(this)">Conferir pintura de PU do box</li>
@@ -136,7 +136,7 @@
     }
 
     function limparChecklist() {
-      document.querySelectorAll('#checklist input[type="checkbox"]').forEach(cb => {
+      document.querySelectorAll('.checklist input[type="checkbox"]').forEach(cb => {
         cb.checked = false;
         cb.parentElement.classList.remove('checked');
       });
@@ -171,7 +171,7 @@
 
       doc.text("Itens Verificados:", 20, y); y += 10;
 
-      const itens = document.querySelectorAll('#checklist li');
+      const itens = document.querySelectorAll('.checklist li');
       itens.forEach((li) => {
         const cb = li.querySelector('input[type="checkbox"]');
         const status = cb.checked ? "SIM" : "NÃO";
@@ -206,7 +206,7 @@
       mensagem += • Painel Solar: ${document.getElementById('painel_solar').value}\n\n;
       mensagem += 🔌 *Itens Verificados:*\n;
 
-      const itens = document.querySelectorAll('#checklist li');
+      const itens = document.querySelectorAll('.checklist li');
       itens.forEach((li) => {
         const cb = li.querySelector('input[type="checkbox"]');
         const status = cb.checked ? "✅" : "❌";
@@ -222,4 +222,3 @@
 
 </body>
 </html>
-
